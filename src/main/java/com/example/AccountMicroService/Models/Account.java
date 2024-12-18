@@ -2,7 +2,6 @@ package com.example.AccountMicroService.Models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -19,14 +17,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnore
-    //@ManyToOne
-    //@JoinColumn(name = "user_id", nullable = false, referencedColumnName = "userId", foreignKey = @ForeignKey(name = "fk_user"))
-    private User user;
-
+    @Column(nullable = false)
+    private String accountName;
 
     @Column(nullable = false)
     private String accountNumber;
@@ -43,4 +38,9 @@ public class Account {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime created_at = LocalDateTime.now();
 
+
+//    public Account(Long userId, String accountName) {
+//        this.userId=userId;
+//        this.accountName=accountName;
+//    }
 }
